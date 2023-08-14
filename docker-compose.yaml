@@ -30,6 +30,8 @@ services:
 
   fastapi:
     environment:
+      MONGO_URL: mongodb://user:password@mongo/admin
+      SIGNING_KEY: 462648998ae984f984c4984ea4d9acd456
       CORS_HOST: http://localhost:3000
     build:
       context: api
