@@ -17,13 +17,13 @@ class Accounts(BaseModel):
     password: str
 
 
-class Input(BaseModel):
-    audiofile: Optional[bytes]
-    text: Optional[str]
+# class Input(BaseModel):
+#     audiofile: Optional[bytes]
+#     text: Optional[str]
 
 
-class Translation(BaseModel):
-    translated_text: str
+# class Translation(BaseModel):
+#     translated_text: str
 
 
 # class Languages(BaseModel):

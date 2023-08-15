@@ -1,5 +1,9 @@
 from pymongo.errors import DuplicateKeyError
-from models.accounts import Account, AccountIn, AccountOutWithPassword
+from models.accounts import (
+    # Account,
+    AccountIn,
+    AccountOutWithPassword,
+)
 from .client import Queries
 
 
@@ -26,10 +30,8 @@ class AccountQueries(Queries):
         self, info: AccountIn, hashed_password: str, roles=["patron"]
     ) -> AccountOutWithPassword:
         props = info.dict()
-        print("👨‍🔧Props is: ", [props])
         props["hashed_password"] = hashed_password
         props["roles"] = roles
-        print("👨‍🔧👨‍🔧👨‍🔧Props is NOW: ", props)
 
         try:
             self.collection.insert_one(props)

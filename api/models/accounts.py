@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import List
-from .validator import PydanticObjectId
+
+# from .validator import PydanticObjectId
 
 
 class SessionOut(BaseModel):

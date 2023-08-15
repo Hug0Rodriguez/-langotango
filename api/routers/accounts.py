@@ -6,16 +6,17 @@ from fastapi import (
     APIRouter,
     Request,
 )
-from authenticator import authenticator
+from .auth import authenticator
 from jwtdown_fastapi.authentication import Token
 from pydantic import BaseModel
 from queries.accounts import (
     AccountQueries,
     DuplicateAccountError,
 )
+from queries.sessions import SessionQueries
 from models.accounts import (
     AccountIn,
-    Account,
+    # Account,
     AccountOut,
     AccountOutWithPassword,
 )
@@ -58,13 +59,14 @@ async def create_account(
     hashed_password = authenticator.hash_password(info.password)
     try:
         account = repo.create(info, hashed_password)
-        print("✅✅✅account Success. Created account variable: ", account)
     except DuplicateAccountError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Cannot create an account with those credentials",
         )
     form = AccountForm(username=info.username, password=info.password)
+    # login automatically via login def in imported authenticator
+    # is the login def creating a session querie?
     token = await authenticator.login(response, request, form, repo)
     print("🫒token is: ", token)
     return AccountToken(account=account, **token.dict())
@@ -86,6 +88,19 @@ async def get_token(
         }
 
 
+@router.delete("/api/sessions/{account_id}", response_model=bool)
+async def delete_session(
+    account_id: str,
+    account: dict = Depends(authenticator.get_current_account_data),
+    repo: SessionQueries = Depends(),
+) -> bool:
+    if "patron" not in account["roles"]:
+        raise not_authorized
+    repo.delete_sessions(account_id)
+    return True
+
+
+# test beau
 # Below code is for getting the current account data
 # Possibly don't need. From fastapi auth docs, not HR example
 # @router.get("/api/things")
