@@ -88,16 +88,16 @@ async def get_token(
         }
 
 
-@router.delete("/api/sessions/{account_id}", response_model=bool)
-async def delete_session(
-    account_id: str,
-    account: dict = Depends(authenticator.get_current_account_data),
-    repo: SessionQueries = Depends(),
-) -> bool:
-    if "patron" not in account["roles"]:
-        raise not_authorized
-    repo.delete_sessions(account_id)
-    return True
+# @router.delete("/api/sessions/{account_id}", response_model=bool)
+# async def delete_session(
+#     account_id: str,
+#     account: dict = Depends(authenticator.get_current_account_data),
+#     repo: SessionQueries = Depends(),
+# ) -> bool:
+#     if "patron" not in account["roles"]:
+#         raise not_authorized
+#     repo.delete_sessions(account_id)
+#     return True
 
 
 # test beau

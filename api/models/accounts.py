@@ -17,14 +17,13 @@ class AccountIn(BaseModel):
 
 class Account(AccountIn):
     # id: PydanticObjectId
-    roles: List[str]
+    pass
 
 
 class AccountOut(BaseModel):
     id: str
     username: str
     full_name: str
-    roles: List[str]
 
 
 class AccountOutWithPassword(AccountOut):
