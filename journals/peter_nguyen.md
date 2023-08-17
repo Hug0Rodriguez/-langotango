@@ -19,3 +19,9 @@ Decided to make a navbar from scratch using traditional html and css that is cur
 - Fixed issue with icons for the nav bar not showing.
 
 
+# W14D4
+
+- Spent majority of the day researching different html&css ideas to implement into
+the front end
+- Brainstormed ideas with the group on UI ideas that can be implemented as a
+stretch goal
