@@ -11,3 +11,11 @@ After messing with bootstrap for the day, decided to scrap it after encountering
 while making a sidebar navigation menu.
 
 Decided to make a navbar from scratch using traditional html and css that is currently working.
+
+
+# W14D3
+
+- Made a card for Accounts and added some css styling for it.
+- Fixed issue with icons for the nav bar not showing.
+
+
