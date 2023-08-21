@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-
+import "./Chat.css";
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 const mic = new SpeechRecognition();
 
 mic.continuous = true;
 mic.interimResults = true;
-mic.lang = ("en-US", "es-ES", "gr-DE", "vi-VN", "zh-ZH");
+mic.lang = ("en-US", "es-ES", "gr-DE", "vi-VN");
 
 function Chat() {
   const [isListening, setIsListening] = useState(false);
@@ -16,6 +16,29 @@ function Chat() {
   useEffect(() => {
     handleListen();
   }, [isListening]);
+
+  const handleStop = async (event) => {
+    event.preventDefault();
+    setIsListening(false);
+    const data = {};
+    data.saved_audio = savedAudio;
+    data.created_at = Date.now();
+    const chatUrl = "http://localhost:8000";
+    const fetchOptions = {
+      method: "post",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const audioResponse = await fetch(chatUrl, fetchOptions);
+    if (audioResponse.ok) {
+      setSavedAudio("");
+    } else {
+      console.log(`audioResponse error: ${JSON.stringify(audioResponse)}`);
+    }
+  };
 
   const handleListen = () => {
     if (isListening) {
@@ -47,6 +70,10 @@ function Chat() {
     };
   };
 
+  const handleStart = () => {
+    setIsListening(true);
+  };
+
   const handleSaveNote = () => {
     setSavedAudio([...savedAudio, audio]);
     setAudio("");
@@ -62,8 +89,11 @@ function Chat() {
           <button onClick={handleSaveNote} disabled={!audio}>
             Save Chat
           </button>
-          <button onClick={() => setIsListening((prevState) => !prevState)}>
-            Start/Stop
+          <button onClick={handleStart} disabled={isListening}>
+            Start
+          </button>
+          <button onClick={handleStop} disabled={!isListening}>
+            Stop
           </button>
           <p>{audio}</p>
         </div>
