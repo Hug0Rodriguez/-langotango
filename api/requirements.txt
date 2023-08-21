@@ -7,3 +7,4 @@ passlib[bcrypt]==1.7.4
 python-multipart==0.0.5
 openai-whisper==20230314
 ffmpeg==1.4
+bardapi==0.1.23a
