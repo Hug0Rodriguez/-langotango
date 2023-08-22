@@ -16,10 +16,22 @@ export const SidebarData = [
     icons: <LuIcons.LuLanguages />,
     cName: "nav-text",
   },
+   {
+    title: "Chat",
+    path: "/chat",
+    icons: <AiIcons.AiFillContacts />,
+    cName: "nav-text",
+  },
+  {
+    title: "Chat",
+    path: "/chat",
+    icons: <AiIcons.AiFillContacts />,
+    cName: "nav-text",
+  },
   {
     title: "Accounts",
     path: "/accounts",
     icons: <AiIcons.AiOutlineUser />,
     cName: "nav-text",
-  }
-]
+  },
+];

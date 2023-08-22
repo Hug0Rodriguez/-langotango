@@ -34,7 +34,7 @@ class TestResponse(BaseModel):
 
 
 # POST
-@router.post("/api/messages", response_model=TestResponse)
+@router.post("/api/messages")
 def user_message_in(
     info: UserMessage,
     request: Request,
@@ -44,7 +44,7 @@ def user_message_in(
 
     # Send message and token to consumer.py
 
-    return TestResponse(message="Success")
+    return response
 
 
 # import whisper
