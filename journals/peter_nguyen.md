@@ -25,3 +25,9 @@ Decided to make a navbar from scratch using traditional html and css that is cur
 the front end
 - Brainstormed ideas with the group on UI ideas that can be implemented as a
 stretch goal
+
+# W15D1
+- Found some resources to incorporate into our landing page to include a slideshow.
+- Pivoted to focus on Chat.js so that our backend and front-end can talk to each other
+- Successfully made a speech to text function that also saves the chat in 4 languages.
+- Will be working on adding a function so that user may talk to the chatbot
