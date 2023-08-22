@@ -33,9 +33,9 @@ services:
 
   fastapi:
     environment:
-      __Secure-1PSID: 'aAjFqAoOWzI8j174bxxnzksuffs3RLRtno3okXKX-c3jr-dV50MftEgT1k2jS0p6ZgEQmQ.'
+      __Secure-1PSID: ${TOKEN}
       MONGO_URL: mongodb://user:password@mongo/admin
-      SIGNING_KEY: ${SINGING_KEY}
+      SIGNING_KEY: ${SIGNING_KEY}
       CORS_HOST: http://localhost:3000
       WAIT_HOSTS: mongo:27017, rabbitmq:5672
       WAIT_TIMEOUT: 180

@@ -3,15 +3,17 @@ import json
 from requests import get
 import time
 from pika.exceptions import AMQPConnectionError
+import os
+from bardapi import Bard
+
 
 
 # define function to consume messages from rabbit_mq
 def converse(ch, method, properties, body):
     content = json.loads(body)
-    headers = {"Authorization": "Bearer " + content["bard_token"]}
-    # send data to bard
-    response = get("https://bard.ai/api/v1/generate", headers=headers)
-
+    token = os.environ('__Secure-1PSID')
+    bard = Bard(token=token)
+    bard.get_answer(content.text)
     # take data from bard response
     text = response.text
 

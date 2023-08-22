@@ -1,5 +1,5 @@
 from bardapi import Bard
 
-token = 'aAjFqLgNexhO3Bs-1S8dKNoDG3wU3JDwXM3GI0ES7k6uhdMp_K4XOfWsURvbnei7tTpXTA.'
+token = 'aAjFqAoOWzI8j174bxxnzksuffs3RLRtno3okXKX-c3jr-dV50MftEgT1k2jS0p6ZgEQmQ.'
 bard = Bard(token=token)
-bard.get_answer("나와 내 동년배들이 좋아하는 뉴진스에 대해서 알려줘")['content']
+bard.get_answer("hola me llamo beau")['content']
