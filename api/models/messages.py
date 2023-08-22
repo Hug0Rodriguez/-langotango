@@ -18,5 +18,12 @@ class ApiMessage(BaseModel):
     created_at: datetime
 
 
-# class UserAudio(BaseModel):
-#   audio : bytes
+# class AudioIn(BaseModel):
+#     audio: bytes
+
+#     def decoded_audio(self):
+#         pass
+
+
+# class AudioOut(BaseModel):
+#     audio: bytes
