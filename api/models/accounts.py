@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 # from .validator import PydanticObjectId
 
@@ -13,6 +13,7 @@ class AccountIn(BaseModel):
     username: str
     password: str
     full_name: str
+    bard_token: Optional["str"]
 
 
 class Account(AccountIn):
@@ -24,6 +25,7 @@ class AccountOut(BaseModel):
     id: str
     username: str
     full_name: str
+    bard_token: str
 
 
 class AccountOutWithPassword(AccountOut):

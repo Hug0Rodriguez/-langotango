@@ -4,6 +4,7 @@ from models.accounts import (
     AccountIn,
     AccountOutWithPassword,
 )
+from typing import Dict
 from .client import Queries
 
 
@@ -41,3 +42,11 @@ class AccountQueries(Queries):
             raise DuplicateAccountError()
         props["id"] = str(props["_id"])
         return AccountOutWithPassword(**props)
+
+    # Take a username to find the bard token stored in the user document
+    def get_bard_token(
+        self,
+        username: str,
+    ) -> Dict:
+        props = self.collection.find_one({"username": username})
+        return props.bard_token

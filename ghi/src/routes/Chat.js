@@ -21,7 +21,7 @@ function Chat() {
     event.preventDefault();
     setIsListening(false);
     const data = {};
-    data.saved_audio = savedAudio;
+    data.text = savedAudio;
     data.created_at = Date.now();
     const chatUrl = "http://localhost:8000";
     const fetchOptions = {

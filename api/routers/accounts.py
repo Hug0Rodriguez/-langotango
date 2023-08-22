@@ -13,6 +13,7 @@ from queries.accounts import (
     AccountQueries,
     DuplicateAccountError,
 )
+import requests
 from queries.sessions import SessionQueries
 from models.accounts import (
     AccountIn,
@@ -57,6 +58,7 @@ async def create_account(
     repo: AccountQueries = Depends(),
 ):
     hashed_password = authenticator.hash_password(info.password)
+    info["bard_token"] = requests.get("https://bard.ai/api/v1/token")
     try:
         account = repo.create(info, hashed_password)
     except DuplicateAccountError:
