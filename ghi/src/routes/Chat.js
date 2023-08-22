@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
-import "./Chat.css";
+
+
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 const mic = new SpeechRecognition();
 
 mic.continuous = true;
 mic.interimResults = true;
-mic.lang = ("en-US", "es-ES", "gr-DE", "vi-VN");
 
 function Chat() {
   const [isListening, setIsListening] = useState(false);
   const [audio, setAudio] = useState(null);
   const [savedAudio, setSavedAudio] = useState([]);
+  const [selectedLanguage, setSelectedLanguage] = useState("en-US"); // Default language
 
   useEffect(() => {
     handleListen();
-  }, [isListening]);
+  }, [isListening, selectedLanguage]);
 
   const handleStop = async (event) => {
     event.preventDefault();
@@ -23,7 +24,7 @@ function Chat() {
     const data = {};
     data.saved_audio = savedAudio;
     data.created_at = Date.now();
-    const chatUrl = "http://localhost:8000";
+    const chatUrl = "http://localhost:8000/api/messages";
     const fetchOptions = {
       method: "post",
       body: JSON.stringify(data),
@@ -78,6 +79,10 @@ function Chat() {
     setSavedAudio([...savedAudio, audio]);
     setAudio("");
   };
+  const handleLanguageChange = (language) => {
+    setSelectedLanguage(language);
+    setIsListening(false); // Stop listening when language changes
+  };
 
   return (
     <>
@@ -95,6 +100,15 @@ function Chat() {
           <button onClick={handleStop} disabled={!isListening}>
             Stop
           </button>
+          <select
+            value={selectedLanguage}
+            onChange={(e) => handleLanguageChange(e.target.value)}
+          >
+            <option value="en-US">English (US)</option>
+            <option value="es-ES">Spanish (Spain)</option>
+            <option value="de-DE">German (Germany)</option>
+            <option value="vi-VN">Vietnamese (Vietnam)</option>
+          </select>
           <p>{audio}</p>
         </div>
         <div className="box">
