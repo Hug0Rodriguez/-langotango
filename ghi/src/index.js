@@ -10,6 +10,7 @@ import {
 import Languages from "./routes/Languages";
 import Home from "./routes/Home";
 import Accounts from "./routes/Account";
+import Chat from "./routes/Chat";
 import Navbar from "./components/Navbar";
 import "./App.css";
 
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
     <Route element={<AppLayout />}>
       <Route path="/" element={<Home />} />
       <Route path="/languages" element={<Languages />} />
+      <Route path="/chat" element={<Chat />} />
       <Route path="/accounts" element={<Accounts />} />
     </Route>
   )

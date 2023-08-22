@@ -24,7 +24,7 @@ function Chat() {
     const data = {};
     data.saved_audio = savedAudio;
     data.created_at = Date.now();
-    const chatUrl = "http://localhost:8000";
+    const chatUrl = "http://localhost:8000/api/messages";
     const fetchOptions = {
       method: "post",
       body: JSON.stringify(data),
