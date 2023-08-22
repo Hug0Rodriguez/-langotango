@@ -16,6 +16,7 @@ function Chat() {
 
   useEffect(() => {
     handleListen();
+    // eslint-disable-next-line
   }, [isListening, selectedLanguage]);
 
   const handleStop = async (event) => {
@@ -42,6 +43,8 @@ function Chat() {
   };
 
   const handleListen = () => {
+    mic.lang = selectedLanguage;
+
     if (isListening) {
       mic.start();
       mic.onend = () => {
