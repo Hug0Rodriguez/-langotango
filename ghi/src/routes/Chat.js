@@ -27,8 +27,9 @@ function Chat() {
     event.preventDefault();
     setIsListening(false);
     const data = {};
-    data.saved_audio = savedAudio;
-    data.created_at = Date.now();
+    data.text = audio;
+    console.log("🚀 ~ file: Chat.js:31 ~ handleStop ~ data:", data)
+    // data.created_at = Date.now();
     const chatUrl = "http://localhost:8000/api/messages";
     const fetchOptions = {
       method: "post",
@@ -37,9 +38,9 @@ function Chat() {
         "Content-Type": "application/json",
       },
     };
-
     const audioResponse = await fetch(chatUrl, fetchOptions);
     if (audioResponse.ok) {
+
       setSavedAudio("");
     } else {
       console.log(`audioResponse error: ${JSON.stringify(audioResponse)}`);
@@ -66,7 +67,6 @@ function Chat() {
     };
 
     mic.onresult = (event) => {
-      console.log(event.results)
       const transcript = Array.from(event.results)
         .map((result) => result[0])
         .map((result) => result.transcript)
@@ -87,10 +87,7 @@ function Chat() {
     setSavedAudio([...savedAudio, audio]);
     setAudio("");
   };
-  const handleLanguageChange = (language) => {
-    setSelectedLanguage(language);
-    setIsListening(false); // Stop listening when language changes
-  };
+
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
     setIsListening(false); // Stop listening when language changes
@@ -120,21 +117,13 @@ function Chat() {
             <option value="es-ES">Spanish (Spain)</option>
             <option value="de-DE">German (Germany)</option>
             <option value="vi-VN">Vietnamese (Vietnam)</option>
-          </select>
-          <select
-            value={selectedLanguage}
-            onChange={(e) => handleLanguageChange(e.target.value)}
-          >
-            <option value="en-US">English (US)</option>
-            <option value="es-ES">Spanish (Spain)</option>
-            <option value="de-DE">German (Germany)</option>
-            <option value="vi-VN">Vietnamese (Vietnam)</option>
+            <option value="zh-Hans">Chinese (PRC)</option>
           </select>
           <p>{audio}</p>
         </div>
         <div className="box">
           <h2>Chat</h2>
-          {savedAudio.map((n) => (
+          {savedAudio&&savedAudio.map((n) => (
             <p key={n}>{n}</p>
           ))}
         </div>

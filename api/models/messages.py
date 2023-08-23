@@ -15,7 +15,7 @@ class Preferences(BaseModel):
 
 class ApiMessage(BaseModel):
     text: str
-    created_at: datetime
+    # created_at: datetime
 
 
 # class AudioIn(BaseModel):

@@ -15,19 +15,6 @@ from models.messages import (
 # Speech to Text API
 router = APIRouter()
 
-# # function, similar to hashed_pw, that gets the text out of request
-# print("💻💻💻info looks like this: ", info)
-# # not sure about below code
-# audio = info.decoded_audio(info)
-# print("🎤audio looks like this: ", audio)
-
-# # Is request the mp3 file?
-# # what is response
-# model = whisper.load_model("base")
-# print("💿💿💿 POST Model Loaded")
-# result = model.transcribe(audio)
-# print("🗣️🗣️🗣️Result after transcription is: ", result)
-
 
 class TestResponse(BaseModel):
     message: str
@@ -35,30 +22,15 @@ class TestResponse(BaseModel):
 
 # POST
 @router.post("/api/messages")
-def user_message_in(
-    info: UserMessage,
-    request: Request,
-    response: Response,
-):
+def user_message_in():
     # get text and token from request
+    print()
 
     # Send message and token to consumer.py
 
-    return response
+    return
 
 
-# import whisper
-# Truncated Whisper code
-# @router.get("/api/messages")
-# def whisper_test():
-#     model = whisper.load_model("base")
-#     print("💿💿💿Model Loaded")
-#     # .mp3, .wav, and .aif work (not sure about efficiency)
-#     # .mp4 does not work
-#     result = model.transcribe("./Efecto.wav")
-#     print("🗣️🗣️🗣️Result after transcription is: ", result)
-#     print(result["text"])
-# Version with language detecetion and logmel shaving
 """
 import whisper
 
