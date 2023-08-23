@@ -1,31 +1,33 @@
 import pika
 import json
 from requests import get
-import time
 from pika.exceptions import AMQPConnectionError
 import os
 from bardapi import Bard
+import time
+
+
+# BARD EXAMPLE
+# from bardapi import Bard
+# (token from 08/23 @4pm)
+# bard = Bard(token='aAjFqKGwYEp32myZHuDxafvHU6wOMKc5prWPlvqu8ydT9V4ITLpNMBkoQaVJ3r2dfyalKw.')
+# bard.get_answer("hola me llamo beau")['content']
+def Hugo_cool():
+    print("Hugo is the best")
 
 
 # define function to consume messages from rabbit_mq
 # do we all this converse function inside a route?
 def converse(ch, method, properties, body):
     content = json.loads(body)
-    print("🪩🪩🪩Content looks like: ", content)
-    token = os.environ("__Secure-1PSID")
-    bard = Bard(token=token)
-    # turbo cntrl+opt+L
-    print(
-        "🚀 ~ file: consumer.py:17 ~  bard = Bard(token=token):",
-        bard=Bard(token=token),
-    )
-    bard.get_answer(content.text)
-    # take data from bard response
-    text = response.text
-
-    # convert text to speech (MORE RESEARCH REQUIRED)
+    # print("🪩🪩🪩Content looks like: ", content)
+    # token = os.environ("BARD_API_KEY")
+    bard = Bard(token=os.environ("BARD_API_KEY"))
+    bard.get_answer(content.text)["content"]
+    print("hello")
 
 
+# convert text to speech (MORE RESEARCH REQUIRED)
 def bard_text_to_speech():
     # send text to bard to convert to speech
     pass
@@ -37,25 +39,37 @@ def speech_to_user():
     pass
 
 
-# while True:
-#     try:
-#         parameters = pika.ConnectionParameters(host="rabbitmq")
-#         connection = pika.BlockingConnection(parameters)
-#         channel = connection.channel()
-#         channel.exchange_declare(
-#             # change account_info?
-#             exchange="account_info",
-#             exchange_type="fanout",
-#         )
-#         result = channel.queue_declare(queue="")
-#         queue_name = result.method.queue
-#         channel.queue_bind(exchange="account_info", queue=queue_name)
-#         channel.basic_consume(
-#             queue=queue_name,
-#             on_message_callback=converse,
-#             auto_ack=True,
-#         )
-#         channel.start_consuming()
-#     except AMQPConnectionError:
-#         print("account_info_consumer could not connect to RabbitMQ")
-#         time.sleep(3.0)
+def start_connection():
+    print("0")
+    try:
+        # connect to host image
+        print("1")
+        parameters = pika.ConnectionParameters(host="rabbitmq")
+        # set variable equal to connection parameters of rabbitmq
+        print("2")
+        connection = pika.BlockingConnection(parameters)
+        # set a channel with the channel() function
+        print("3")
+        channel = connection.channel()
+
+        # channel.exchange_declare(
+        #     exchange="text_to_bard",
+        #     exchange_type="fanout",
+        # )
+        print("4")
+        channel.queue_declare(queue="messages")
+        # Creating a queue
+        # messages = result.method.queue
+        # channel.queue_bind(exchange="", queue="messages")
+        print("5")
+        channel.basic_consume(
+            queue="messages",
+            on_message_callback=converse,
+            auto_ack=True,
+        )
+        print("Consumer.py is now consuming")
+        channel.start_consuming()
+
+    except Exception:
+        print("account_info_consumer could not connect to RabbitMQ")
+        time.sleep(3.0)

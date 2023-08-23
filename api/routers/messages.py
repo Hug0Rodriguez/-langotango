@@ -10,6 +10,25 @@ from pydantic import BaseModel
 from models.messages import (
     UserMessage,
 )
+from consumer import converse, start_connection, Hugo_cool
+from token_auth import get_current_user
+import pika
+import json
+
+# print("")
+# start_connection()
+
+# Hugo_cool()
+
+
+def produce_message(data):
+    parameters = pika.ConnectionParameters(host="rabbitmq")
+    connection = pika.BlockingConnection(parameters)
+    channel = connection.channel()
+    channel.queue_declare(queue="messages")
+    channel.basic_publish(exchange="", routing_key="messages", body=f"{data}")
+    connection.close()
+
 
 # basic command version
 # Speech to Text API
@@ -20,18 +39,39 @@ class TestResponse(BaseModel):
     message: str
 
 
+class ReceivedMessage(BaseModel):
+    text: str
+
+
 # POST
-@router.post("/api/messages")
-def user_message_in():
-    # get text and token from request
-    print()
+@router.post("/api/messages", response_model=ReceivedMessage)
+async def user_message_in(
+    message: UserMessage,
+    # account: dict = Depends(get_current_user),
+):
+    # get text from request
+    print(message)
+    print("hello sir")
+    produce_message(message)
+    # Send message to consumer.py
 
-    # Send message and token to consumer.py
-
-    return
+    return message
 
 
+# Example from Library project
 """
+@router.post("/books", response_model=BookOut)
+async def create_book(
+    book: BookIn,
+    repo: BookQueries = Depends(),
+    account: dict = Depends(get_current_user),
+):
+    if "librarian" not in account.roles:
+        raise not_authorized
+    book = repo.create(book)
+    await socket_manager.broadcast_refetch()
+    return book
+
 import whisper
 
 model = whisper.load_model("base")
