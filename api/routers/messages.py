@@ -1,19 +1,21 @@
 from fastapi import (
     Depends,
-    HTTPException,
-    status,
-    Response,
+    # HTTPException,
+    # status,
+    # Response,
     APIRouter,
-    Request,
+    # Request,
+    BackgroundTasks,
 )
 from pydantic import BaseModel
 from models.messages import (
     UserMessage,
 )
-from consumer import converse, start_connection, Hugo_cool
+from consumer import start_connection, Hugo_cool
 from token_auth import get_current_user
 import pika
 import json
+import time
 
 # print("")
 # start_connection()
@@ -43,35 +45,29 @@ class ReceivedMessage(BaseModel):
     text: str
 
 
+def bard_test(**kwargs):
+    with open("file.txt", "w") as new_file:
+        new_file.write("test")
+
+
 # POST
 @router.post("/api/messages", response_model=ReceivedMessage)
 async def user_message_in(
     message: UserMessage,
+    background_tasks: BackgroundTasks
     # account: dict = Depends(get_current_user),
 ):
+    background_tasks.add_task(bard_test, kwargs=message)
     # get text from request
-    print(message)
-    print("hello sir")
-    produce_message(message)
+    print(message, "print on line 60")
+    # print("hello sir")
+    # produce_message(message)
     # Send message to consumer.py
 
     return message
 
 
-# Example from Library project
 """
-@router.post("/books", response_model=BookOut)
-async def create_book(
-    book: BookIn,
-    repo: BookQueries = Depends(),
-    account: dict = Depends(get_current_user),
-):
-    if "librarian" not in account.roles:
-        raise not_authorized
-    book = repo.create(book)
-    await socket_manager.broadcast_refetch()
-    return book
-
 import whisper
 
 model = whisper.load_model("base")

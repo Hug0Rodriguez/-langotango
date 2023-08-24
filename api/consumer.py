@@ -18,13 +18,6 @@ def Hugo_cool():
 
 # define function to consume messages from rabbit_mq
 # do we all this converse function inside a route?
-def converse(ch, method, properties, body):
-    content = json.loads(body)
-    # print("🪩🪩🪩Content looks like: ", content)
-    # token = os.environ("BARD_API_KEY")
-    bard = Bard(token=os.environ("BARD_API_KEY"))
-    bard.get_answer(content.text)["content"]
-    print("hello")
 
 
 # convert text to speech (MORE RESEARCH REQUIRED)
