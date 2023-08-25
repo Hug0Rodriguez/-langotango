@@ -5,34 +5,29 @@ from fastapi import (
     # Response,
     APIRouter,
     # Request,
-    BackgroundTasks,
-    WebSocket,
+    # BackgroundTasks,
+    # WebSocket,
+    # WebSocketDisconnect,
 )
 from pydantic import BaseModel
 from models.messages import (
     UserMessage,
 )
-from consumer import start_connection, Hugo_cool
-from token_auth import get_current_user
-import pika
-import json
-import time
 import os
-from bardapi import Bard
-from google.cloud import texttospeech
+
+# from bardapi import Bard
+# from google.cloud import texttospeech
 import base64
+import requests
+import openai
 
-# start_connection()
+# from token_auth import get_current_user
+import json
+
+# import time
 
 
-def produce_message(data):
-    parameters = pika.ConnectionParameters(host="rabbitmq")
-    connection = pika.BlockingConnection(parameters)
-    channel = connection.channel()
-    channel.queue_declare(queue="messages")
-    channel.basic_publish(exchange="", routing_key="messages", body=f"{data}")
-    connection.close()
-
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 router = APIRouter()
 
@@ -40,33 +35,28 @@ router = APIRouter()
 class TestResponse(BaseModel):
     message: str
 
+    # token = os.environ["TOKEN"]
+    # # token of the day: aAjFqKGwYEp32myZHuDxafvHU6wOMKc5prWPlvqu8ydT9V4ITLpNMBkoQaVJ3r2dfyalKw.
+    # bard = Bard(token=token)
+    # chatbot_response = bard.get_answer(text)["content"]
+
 
 class ReceivedMessage(BaseModel):
     text: str
 
 
+
+
 def bard_test(**kwargs):
-    with open("file.txt", "w") as new_file:
-        new_file.write("test")
+    pass
 
 
-def text_to_chatbot(**kwargs):
-    # use bard api call to generate response
-    # might be os.environ.get()
-    token = os.environ("token_variable_name")
-    # token of the day: aAjFqKGwYEp32myZHuDxafvHU6wOMKc5prWPlvqu8ydT9V4ITLpNMBkoQaVJ3r2dfyalKw.
-    bard = Bard(token=token)
-    chatbot_response = bard.get_answer("hola me llamo beau")["content"]
-    return chatbot_response # This goes nowehere
+async def text_to_chatbot(text):
+    with open("file.txt", "a") as new_file:
+        new_file.write(text + "FROM TEXT_TO_CHAT")
+    # return chatbot_response
+    pass
 
-# ADD WEBSOCKETS HERE
-@router.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-    while True:
-        chatbot_response = await websocket.receive_text() # Where is this receiving text from?
-        audio_base64 = google_text_to_speech(chatbot_response)
-        await websocket.send_text(audio_base64)
 
 def google_text_to_speech(chatbot_response):
     # pass in response to google text to speech
@@ -81,7 +71,8 @@ def google_text_to_speech(chatbot_response):
     # # Build the voice request, select the language code ("en-US") and the ssml
     # # voice gender ("neutral")
     voice = texttospeech.VoiceSelectionParams(
-        language_code="en-US", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL # Specifying en-US will conflict with our current non-English test-cases.
+        language_code="en-US",
+        ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL,  # Specifying en-US will conflict with our current non-English test-cases.
     )
 
     # # Select the type of audio file you want returned
@@ -106,32 +97,75 @@ def google_text_to_speech(chatbot_response):
         # OUTPUT.mp3 is the audiofile we want our frontend to play
 
 
+connected_socket = None
+
+
+# ADD WEBSOCKETS HERE
+# @router.websocket("/ws")
+# async def websocket_endpoint(websocket: WebSocket):
+#     global connected_socket
+#     await websocket.accept()
+#     connected_socket = websocket
+#     while True:
+#         chatbot_response = await websocket.receive_text()
+#         # audio_base64 = google_text_to_speech(chatbot_response)
+#         with open("file.txt", "a") as new_file:
+#             new_file.write(chatbot_response + "FROM websocket")
+#         await websocket.send_text(chatbot_response)
+#         return {"message": "The message was sent"}
+
+
+# @router.post("/api/return-text")
+# def sending_text(message: str):
+#     # global connected_socket
+#     # message_in = json.loads(message)
+#     # if connected_socket:
+#     #     with open("file.txt", "a") as new_file:
+#     #         new_file.write("SOCKET OPEN")
+#     #     await connected_socket.send_text(message_in)
+#     #     return {"message": message_in}
+#     # else:
+#     #     with open("file.txt", "a") as new_file:
+#     #         new_file.write("NO SOCKET")
+#     # with open("file.txt", "a") as new_file:
+#     #     new_file.write(message + "FROM sending_text")
+#     return {}
+
+
+# async def message_processor(message: dict):
+#     # use bard api call to generate response
+#     # might be os.environ.get()
+#     text = message.text
+#     chatbot_response = text_to_chatbot(text)
+#     # audio = google_text_to_speech(chatbot_response)
+
+#     # 6 sends audio back to client
+#     await requests.post("http://localhost:8000/api/return-text", text)
+
+
 # POST
 @router.post("/api/messages", response_model=ReceivedMessage)
 async def user_message_in(
     message: UserMessage,
-    background_tasks: BackgroundTasks
+    # background_tasks: BackgroundTasks
+    # repo: ConversationQueries = Depends()
     # account: dict = Depends(get_current_user),
 ):
-    # background_tasks.add_task(bard_test, kwargs=message)
-    # # get text from request
-    # print(message, "print on line 60")
+    message_in = # Query to create new message and add it into conversation collection
+    message_history = # query to pull previous related messages from DB
+    # ensure output of message_history is a list of dictionaries
+    # CHAP GPT CHATBOT EXAMPLE REQUEST
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+         # messages must be a list dictionaries in the form
+         # {"role": "user/system", {"message": "string"}}
+        messages=message_history
+    )
 
-    # 3. calls bard.get_answer
-    background_tasks.add_task(text_to_chatbot, kwargs=something)
+    # query to write completion to the DB collection
+    print(completion.choices[0].message)
 
-    # 4.5 Takes text from chatbot response
-    # I don't know what to put here??
-
-    # 5 calls bard text to speech
-    background_tasks.add_task(google_text_to_speech, kwargs=something)
-
-    # 6 sends audio back to client
-    # Use Websockets
-
-    # produce_message(message)
-    # Send message to consumer.py
-
+    # return chat message
     return message
 
 
