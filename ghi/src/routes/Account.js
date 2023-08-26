@@ -1,4 +1,7 @@
 import React from "react";
+import { useState } from "react";
+import useToken from "@galvanize-inc/jwtdown-for-react";
+
 
 function Account({ isLoggedIn, handleLogin, handleLogout, handleSignUp }) {
   return (

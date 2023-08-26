@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import Construct from "./Construct.js";
 import ErrorNotification from "./ErrorNotification";
+import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import "./App.css";
 
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
   const [error, setError] = useState(null);
+  const baseUrl = "http://localhost:3000";
 
   useEffect(() => {
     async function getData() {
@@ -27,10 +29,14 @@ function App() {
   }, []);
 
   return (
+    <>
+    <AuthProvider baseUrl={baseUrl}>
     <div>
       <ErrorNotification error={error} />
       <Construct info={launchInfo} />
     </div>
+    </AuthProvider>
+    </>
   );
 }
 
