@@ -1,12 +1,8 @@
 from fastapi import (
     Depends,
-    # HTTPException,
-    # status,
-<<<<<<< HEAD
-    Response,
-=======
+    # # HTTPException,
+    # # status,
     # Response,
->>>>>>> W15D5APIs
     APIRouter,
     # Request,
     # BackgroundTasks,
@@ -17,29 +13,17 @@ from pydantic import BaseModel
 from models.messages import (
     UserMessage,
 )
-<<<<<<< HEAD
 from queries.accounts import AccountQueries
-import pika
-import json
-
-# from requests import session
-=======
 import os
-
-# from bardapi import Bard
-# from google.cloud import texttospeech
 import base64
 import requests
 import openai
-
 # from token_auth import get_current_user
 import json
-
 # import time
 
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
->>>>>>> W15D5APIs
 
 router = APIRouter()
 
@@ -155,37 +139,7 @@ connected_socket = None
 #     await requests.post("http://localhost:8000/api/return-text", text)
 
 
-def produce_message(data):
-    parameters = pika.ConnectionParameters(host="rabbitmq")
-    connection = pika.BlockingConnection(parameters)
-    channel = connection.channel()
-    channel.queue_declare(queue="user_messages")
-    channel.basic_publish(
-        exchange="", routing_key="user_messages", body=f"{data}"
-    )
-    connection.close()
-
-    # in the sending fxn
-
-
 # POST
-<<<<<<< HEAD
-@router.post("/api/messages", response_model=TestResponse)
-def user_message_in(
-    info: UserMessage,
-    request: Request,
-    response: Response,
-    repo: AccountQueries = Depends(),
-):
-    # find way to extract username or bearer token from request
-    bard_token = repo.get_bard_token(username)
-    message_fields = {"text": info.text, "bard_token": bard_token}
-
-    message = json.dumps(message_fields)
-    produce_message(message, "user_messages")
-
-    return TestResponse(message="Success")
-=======
 @router.post("/api/messages", response_model=ReceivedMessage)
 async def user_message_in(
     message: UserMessage,
@@ -210,6 +164,8 @@ async def user_message_in(
     # return chat message
     return message
 
+@router.get("/api/messages")
+async
 
 """
 import whisper
@@ -234,4 +190,3 @@ result = whisper.decode(model, mel, options)
 # print the recognized text
 print(result.text)
 """
->>>>>>> W15D5APIs
