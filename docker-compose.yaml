@@ -33,10 +33,11 @@ services:
 
   fastapi:
     environment:
+      TOKEN: ${TOKEN}
       MONGO_URL: mongodb://user:password@mongo/admin
       SIGNING_KEY: ${SIGNING_KEY}
       CORS_HOST: http://localhost:3000
-      WAIT_HOSTS: rabbitmq:5672, mongo:27017
+      WAIT_HOSTS: mongo:27017
       WAIT_TIMEOUT: 180
     build:
       context: api
@@ -46,7 +47,6 @@ services:
     volumes:
       - ./api:/app
     depends_on:
-      - rabbitmq
       - mongo
 
   ghi:
