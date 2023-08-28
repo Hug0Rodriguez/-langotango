@@ -4,7 +4,7 @@ from fastapi import (
     # # status,
     # Response,
     APIRouter,
-    # Request,
+    Request,
     # BackgroundTasks,
     # WebSocket,
     # WebSocketDisconnect,
@@ -13,13 +13,17 @@ from pydantic import BaseModel
 from models.messages import (
     UserMessage,
 )
+from .auth import authenticator
+from models.accounts import AccountOut
 from queries.accounts import AccountQueries
 import os
 import base64
 import requests
 import openai
+
 # from token_auth import get_current_user
 import json
+
 # import time
 
 
@@ -39,8 +43,6 @@ class TestResponse(BaseModel):
 
 class ReceivedMessage(BaseModel):
     text: str
-
-
 
 
 def bard_test(**kwargs):
@@ -143,29 +145,38 @@ connected_socket = None
 @router.post("/api/messages", response_model=ReceivedMessage)
 async def user_message_in(
     message: UserMessage,
+    request: Request,
+    account: AccountOut = Depends(authenticator.try_get_current_account_data)
     # background_tasks: BackgroundTasks
     # repo: ConversationQueries = Depends()
     # account: dict = Depends(get_current_user),
 ):
-    message_in = # Query to create new message and add it into conversation collection
-    message_history = # query to pull previous related messages from DB
-    # ensure output of message_history is a list of dictionaries
-    # CHAP GPT CHATBOT EXAMPLE REQUEST
-    completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-         # messages must be a list dictionaries in the form
-         # {"role": "user/system", {"message": "string"}}
-        messages=message_history
-    )
+    print(account["username"])
+    # message_in = {
+    #     "role": "user",
+    #     "message": "content",
+    # }  # Query to create new message and add it into conversation collection
+    # message_history = [
+    #     {"user": "system", "message": "content"},
+    #     {"role": "user", "message": "content"},
+    # ]  # query to pull previous related messages from DB
+    # # ensure output of message_history is a list of dictionaries
+    # # CHAP GPT CHATBOT EXAMPLE REQUEST
+    # completion = openai.ChatCompletion.create(
+    #     model="gpt-3.5-turbo",
+    #     # messages must be a list dictionaries in the form
+    #     # {"role": "user/system", {"message": "string"}}
+    #     messages=message_history,
+    # )
 
     # query to write completion to the DB collection
-    print(completion.choices[0].message)
+    # print(completion.choices[0].message)
 
     # return chat message
     return message
 
-@router.get("/api/messages")
-async
+
+# @router.get("/api/messages")
 
 """
 import whisper

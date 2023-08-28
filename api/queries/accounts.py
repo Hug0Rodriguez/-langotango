@@ -1,6 +1,5 @@
 from pymongo.errors import DuplicateKeyError
 from models.accounts import (
-    # Account,
     AccountIn,
     AccountOutWithPassword,
 )

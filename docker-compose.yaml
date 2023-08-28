@@ -11,11 +11,9 @@ services:
       - ./setup/mongodb:/docker-entrypoint-initdb.d
       - mongo-data:/data/db
     environment:
+      MONGO_INITDB_DATABASE: mongo-data
       MONGO_INITDB_ROOT_USERNAME: user
       MONGO_INITDB_ROOT_PASSWORD: password
-
-  rabbitmq:
-    image: rabbitmq:latest
 
   mongo-express:
     build:
@@ -33,7 +31,7 @@ services:
 
   fastapi:
     environment:
-      TOKEN: ${TOKEN}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
       MONGO_URL: mongodb://user:password@mongo/admin
       SIGNING_KEY: ${SIGNING_KEY}
       CORS_HOST: http://localhost:3000
