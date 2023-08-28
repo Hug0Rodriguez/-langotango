@@ -1,6 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import useToken from "@galvanize-inc/jwtdown-for-react";
+// import { useState } from "react";
+// import useToken from "@galvanize-inc/jwtdown-for-react";
 
 
 function Account({ isLoggedIn, handleLogin, handleLogout, handleSignUp }) {
@@ -28,24 +28,7 @@ function Account({ isLoggedIn, handleLogin, handleLogout, handleSignUp }) {
           </div>
           {!isLoggedIn && (
             <div>
-              <div className="input-container">
-                <label htmlFor="name" className="input-label">
-                  Name
-                </label>
-                <input type="text" className="input" id="name" />
-              </div>
-              <div className="input-container">
-                <label htmlFor="email" className="input-label">
-                  Username
-                </label>
-                <input type="email" className="input" id="email" />
-              </div>
-              <div className="input-container">
-                <label htmlFor="password" className="input-label">
-                  Password
-                </label>
-                <input type="password" className="input" id="password" />
-              </div>
+
             </div>
           )}
         </div>
