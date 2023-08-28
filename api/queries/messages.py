@@ -1,43 +1,51 @@
 from pymongo.errors import DuplicateKeyError
-from models.messages import Conversation
+from models.messages import MessageIn, MessageOut
 from datetime import datetime
 
 # from models.messages import
 from .client import Queries
 
 class ConversationQueries(Queries):
-    DB_Name = "mongo_data"
+    DB_NAME = "mongo_data"
     COLLECTION = "conversations"
 
     #TOKEN scenario
-    def create(self, userMessageIn: shape_of_data) -> MessageOut
+    def create(self, userMessageIn: MessageIn) -> MessageOut:
 
-    # check if conversation associated with existing token exists
-    if db.conversations.getalletc["token"]is False:
-        #text of the message,
-        # possible time stamps,
-        # username,
-        # a good sorting system for conversations
-        # token associated
-        # conversation_id for each covnersation
-        props = userMessageIn.dict()
-        props["id"] = str(props["_id"])
-        props["username"] = str(props["username"])
-        props["timestamp"] = str(props[datetime.now()])
-        props["token"] = # can access token from the request header
-        props["messages"] = # list of messages
+        # check if conversation associated with existing token exists
+        if mongo_data.conversations.find_one({"token": userMessageIn.token}) is False:
+            props = userMessageIn.dict()
+            self.collection.insert_one(props)
+            props["id"] = str(props["_id"])
+            # props["username"] = str(props["username"])
+            # props["timestamp"] = str(props[datetime.now()])
+            # props["token"] = str(props[userMessageIn.token])
+            MessageOut["role"]
 
-    # conversation already exists
-    elif db.conversations.find({ token: request.token }):
-    # set conversation to the existing conversation based on the token
-    conversations = db.conversations.find(conversations["token"])
-    # if convo exists, add messages
+        # conversation already exists
+        elif mongo_data.conversations.find_one({ "token": userMessageIn.token }):
+            # set conversation to the existing conversation based on the token
+            conversations = mongo_data.conversations.find_one({"token": userMessageIn.token})
+            # if convo exists, add messages
 
-    #when convo is pulled up, add token to convo tokens list
-    # else, convo doesn't exist, create convo
+            #when convo is pulled up, add token to convo tokens list
+            # else, convo doesn't exist, create convo
 
-    # MessageOut is what we send to chatbot
-    return MessageOut
+            # MessageOut is what we send to chatbot
+        return MessageOut
+
+
+class MessageQueries(Queries):
+    DB_NAME = "mongo_data"
+    COLLECTION = "messgaes"
+
+    def create(self, userMessageIn: MessageIn) -> MessageOut:
+        props["username"]
+        props["datetime"]
+        props["token"]
+        props["content"]
+        props["role"]
+
 
 '''
 Example Queries:
@@ -46,9 +54,13 @@ class BookQueries(Queries):
     COLLECTION = "inventory"
 
     def create(self, book: BookIn) -> BookOut:
+        # converts BookIn to dict to store
         props = book.dict()
+        # insert s props into collection
         self.collection.insert_one(props)
+        # converts id to _id because mongo likes it that way
         props["id"] = str(props["_id"])
+        # returns Bookout object with empty loand and howevermany keyword props
         return BookOut(loans=[], **props)
 
     def get_all(self) -> List[BookOut]:

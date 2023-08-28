@@ -8,7 +8,8 @@ from pydantic import BaseModel
 from models.messages import (
     UserMessage,
 )
-from queries.messages import ConversationQueries
+from queries.messages import ConversationQueries, MessageQueries
+from datetime import datetime
 import os
 import openai
 
@@ -34,9 +35,10 @@ async def user_message_in(
     account: dict = Depends(authenticator.try_get_current_account_data),
 ):
     token = request.headers
-    current_conversation = repo.get_conversation(token=token)
     message["username"] = account.username
     message["token"] = token
+    message["role"] = "user"
+    message["timestamp"] = datetime.now()
     repo.create(userMessageIn=message)
     message_history = repo.get_all_messages()
     # ensure output of message_history is a list of dictionaries
