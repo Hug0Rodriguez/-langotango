@@ -14,6 +14,9 @@ services:
       MONGO_INITDB_ROOT_USERNAME: user
       MONGO_INITDB_ROOT_PASSWORD: password
 
+  rabbitmq:
+    image: rabbitmq:latest
+
   mongo-express:
     build:
       context: api/setup/mongo-express
@@ -30,9 +33,12 @@ services:
 
   fastapi:
     environment:
+      __Secure-1PSID: ${TOKEN}
       MONGO_URL: mongodb://user:password@mongo/admin
-      SIGNING_KEY: 462648998ae984f984c4984ea4d9acd456
+      SIGNING_KEY: ${SIGNING_KEY}
       CORS_HOST: http://localhost:3000
+      WAIT_HOSTS: mongo:27017, rabbitmq:5672
+      WAIT_TIMEOUT: 180
     build:
       context: api
       dockerfile: Dockerfile.dev
@@ -40,6 +46,9 @@ services:
       - 8000:8000
     volumes:
       - ./api:/app
+    depends_on:
+      - rabbitmq
+      - mongo
 
   ghi:
     image: node:lts-bullseye
