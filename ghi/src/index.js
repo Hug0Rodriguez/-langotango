@@ -11,6 +11,8 @@ import Home from "./routes/Home";
 import Accounts from "./routes/Account";
 import Chat from "./routes/Chat";
 import Navbar from "./components/Navbar";
+import SignupForm from "./routes/Signup";
+import LoginForm from "./routes/Login";
 import "./App.css";
 
 const AppLayout = () => (
@@ -26,6 +28,8 @@ const router = createBrowserRouter(
       <Route path="/" element={<Home />} />
       <Route path="/chat" element={<Chat />} />
       <Route path="/accounts" element={<Accounts />} />
+      <Route path="/signup" element={<SignupForm />} />
+      <Route path="/login" element={<LoginForm />} />
     </Route>
   )
 );
