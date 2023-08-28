@@ -93,3 +93,34 @@ Our goal for tomorrow is to get responses working from Bard and establish Rabbit
 We made good headway early in the day in getting successful HTTP responses. We got Bard to give us successful text responses.
 We got hung up on getting a Rabbit consumer to work. Took a break in late afternoon to research better methods.
 ```
+
+## W15D4 - August 24th, 2023
+
+### House of Bard Troubles
+
+```
+I was not present for groupwork today because of a wedding, but the group discovered a potential alternative to Google text-to-speech.
+They also tried implementing WebSockets.
+```
+
+## W15D5 - August 25th, 2023
+
+### Moving On
+
+```
+We decided this morning to move on from RabbitMQ andWebSockets, especially because the
+React Text-to-Speech toolkit rendered the return of chatbot text with the http response
+viable. No need for event messages, background texts, or back-to-front forced messages.
+Wealso abandoned Bard in favor of OpenAI's chat models.
+```
+
+## W16D1 -August 28th, 2023
+
+### We Have Words!
+
+```
+Today we made great headway in bring together all of our different functionality plans.
+OpenAI is giving us responses, we made progress in our database setup, and we havea solid foundation to finish up minimum functionality this week.
+```
+
+[Here's a useful markdown cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#lists "Markdown Cheatsheet")

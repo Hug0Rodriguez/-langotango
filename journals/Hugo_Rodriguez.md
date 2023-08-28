@@ -11,3 +11,7 @@ We have completed Authorization, now it is us up to us to figure out what API we
 
 Wednesday August 23 2023
 Today was my day to take command, we worked out a few kinks but are a bit stuck in regards to our consumer.py. Unsure of wether we need a sepearate container or not. We tried importing the functions but they do not seem to be called at all. Very mysterious!
+
+
+Monday August 28th 2023
+Today we completed and got our react speech synthesis to work. We also got our chatgpt api to work and actually respond to whatever people are writing .
