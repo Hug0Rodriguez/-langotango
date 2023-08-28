@@ -22,6 +22,7 @@ function Chat() {
   }, [isListening, selectedLanguage]);
 
   const handleStop = async (event) => {
+    speak({ text: audio });
     event.preventDefault();
     setIsListening(false);
     const data = {};
@@ -122,7 +123,6 @@ function Chat() {
           </select>
           <p>{audio}</p>
           {responseChat && <p className="response">{responseChat}</p>}{" "}
-          {audio && <p className="audio">{audio}</p>}{" "}
           {/* Display response */}
         </div>
         <div className="box">
