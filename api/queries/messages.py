@@ -5,30 +5,35 @@ from datetime import datetime
 # from models.messages import
 from .client import Queries
 
+
 class ConversationQueries(Queries):
     DB_NAME = "mongo_data"
     COLLECTION = "conversations"
 
-    #TOKEN scenario
-    def create(self, userMessageIn: MessageIn) -> MessageOut:
-
+    # TOKEN scenario
+    def create(self, UserMessageIn: MessageIn) -> MessageOut:
         # check if conversation associated with existing token exists
-        if mongo_data.conversations.find_one({"token": userMessageIn.token}) is False:
-            props = userMessageIn.dict()
+        if (
+            mongo_data.conversations.find_one({"token": UserMessageIn.token})
+            is False
+        ):
+            props = UserMessageIn.dict()
             self.collection.insert_one(props)
             props["id"] = str(props["_id"])
             # props["username"] = str(props["username"])
             # props["timestamp"] = str(props[datetime.now()])
-            # props["token"] = str(props[userMessageIn.token])
+            # props["token"] = str(props[UserMessageIn.token])
             MessageOut["role"]
 
         # conversation already exists
-        elif mongo_data.conversations.find_one({ "token": userMessageIn.token }):
+        elif mongo_data.conversations.find_one({"token": UserMessageIn.token}):
             # set conversation to the existing conversation based on the token
-            conversations = mongo_data.conversations.find_one({"token": userMessageIn.token})
+            conversation = mongo_data.conversations.find_one(
+                {"token": UserMessageIn.token}
+            )
             # if convo exists, add messages
 
-            #when convo is pulled up, add token to convo tokens list
+            # when convo is pulled up, add token to convo tokens list
             # else, convo doesn't exist, create convo
 
             # MessageOut is what we send to chatbot
@@ -39,7 +44,7 @@ class MessageQueries(Queries):
     DB_NAME = "mongo_data"
     COLLECTION = "messgaes"
 
-    def create(self, userMessageIn: MessageIn) -> MessageOut:
+    def create(self, UserMessageIn: MessageIn) -> MessageOut:
         props["username"]
         props["datetime"]
         props["token"]
@@ -47,7 +52,7 @@ class MessageQueries(Queries):
         props["role"]
 
 
-'''
+"""
 Example Queries:
 class BookQueries(Queries):
     DB_NAME = "library"
@@ -111,4 +116,4 @@ class LoanQueries(Queries):
             }
         )
 
-'''
+"""

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import  { useSpeechSynthesis } from 'react-speech-kit'
+import { useSpeechSynthesis } from "react-speech-kit";
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -14,7 +14,7 @@ function Chat() {
   const [savedAudio, setSavedAudio] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState("en-US"); // Default language
   const [responseChat, setResponseChat] = useState();
-  const {speak} = useSpeechSynthesis();
+  const { speak } = useSpeechSynthesis();
 
   useEffect(() => {
     handleListen();
@@ -23,6 +23,7 @@ function Chat() {
 
   const handleStop = async (event) => {
     speak({ text: audio });
+
     event.preventDefault();
     setIsListening(false);
     const data = {};
@@ -47,6 +48,10 @@ function Chat() {
       console.log(`audioResponse error: ${JSON.stringify(response)}`);
     }
   };
+
+  useEffect(() => {
+    speak({ text: responseChat });
+  }, [responseChat]);
 
   const handleListen = () => {
     mic.lang = selectedLanguage;
@@ -94,7 +99,6 @@ function Chat() {
     setIsListening(false); // Stop listening when language changes
   };
 
-
   return (
     <>
       <h1>Chat</h1>
@@ -126,10 +130,9 @@ function Chat() {
           {/* Display response */}
         </div>
         <div className="box">
-          <h2>Chat</h2>
+          <h2>Chat History</h2>
           {savedAudio && savedAudio.map((n) => <p key={n}>{n}</p>)}
         </div>
-        <div></div>
       </div>
     </>
   );
