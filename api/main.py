@@ -5,6 +5,8 @@ from routers.auth import authenticator
 from fastapi import APIRouter, Depends
 from routers import accounts, messages
 
+# from consumer import converse, start_connection, Hugo_cool
+
 router = APIRouter()
 
 
@@ -18,7 +20,6 @@ async def create_thing(
 
 
 app = FastAPI()
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[os.environ.get("CORS_HOST", "http://localhost:3000")],
@@ -31,6 +32,7 @@ app.add_middleware(
 app.include_router(authenticator.router)
 app.include_router(accounts.router)
 app.include_router(messages.router)
+# start_connection()
 
 
 @app.get("/api/launch-details")

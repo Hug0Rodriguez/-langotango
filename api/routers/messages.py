@@ -1,18 +1,17 @@
-from fastapi import (
-    Depends,
-    HTTPException,
-    status,
-    Response,
-    APIRouter,
-    Request,
-)
+from fastapi import Depends, APIRouter, Request
+from .auth import authenticator
 from pydantic import BaseModel
 from models.messages import (
     UserMessage,
 )
+from queries.messages import ConversationQueries, MessageQueries
+from models.accounts import AccountOut
+from datetime import datetime
+import os
+import openai
 
-# basic command version
-# Speech to Text API
+openai.api_key = os.environ["OPENAI_API_KEY"]
+
 router = APIRouter()
 
 
@@ -20,15 +19,38 @@ class TestResponse(BaseModel):
     message: str
 
 
+class ReceivedMessage(BaseModel):
+    text: str
+
+
 # POST
-@router.post("/api/messages")
-def user_message_in():
-    # get text and token from request
-    print()
+@router.post("/api/messages", response_model=ReceivedMessage)
+async def user_message_in(
+    message: UserMessage,
+    request: Request,
+    repo: ConversationQueries = Depends(),
+    account: AccountOut = Depends(authenticator.try_get_current_account_data),
+):
+    print(account)
+    # message["token"] = "token"
+    # message["role"] = "user"
+    # message["timestamp"] = datetime.now()
+    # repo.create(userMessageIn=message)
+    # message_history = repo.get_all_messages()
+    # # ensure output of message_history is a list of dictionaries
+    # # CHAP GPT CHATBOT EXAMPLE REQUEST
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        # messages must be a list dictionaries in the form
+        # {"role": "user/system", {"content": "string"}}
+        messages=[{"role": "user", "content": "Hello there!"}],
+    )
 
-    # Send message and token to consumer.py
+    # query to write completion to the DB collection
+    response = completion.choices[0].message.content
 
-    return
+    # return chat message
+    return {"text": response}
 
 
 """

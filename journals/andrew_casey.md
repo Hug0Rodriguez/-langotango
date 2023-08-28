@@ -23,6 +23,7 @@ Little did we know...
 ## W14D2 - Auth Strikes Back - August 15th, 2023
 
 ### A haiku
+
 ```
 How could this happen?
 All day just bugs and errors...
@@ -30,12 +31,14 @@ Betrayed by repos.
 ```
 
 ### For Real Though
+
 ```
 At the end of the day, it seems we got auth working alright.
 Got back the 200s for our create account requests, responses looked right.
 Tomorrow we will re-attack and make sure login/logout work before working on endpoints for messages.
 We also need to clean up our queries so that the hashed password is getting written to the db instead of the normal one.
 ```
+
 ## W14D3 - August 16th, 2023
 
 ### Auth
@@ -67,7 +70,57 @@ We agreed that, by the end of next week, we would have API endpoints completed s
 ## W15D1 - August 21st, 2023
 
 ### Whispe- Oh, nevermind
+
 ```
 We spent much of today trying to properly configured and implement Whisper API, and then Peter figured out a really easy way to do Speech-to-Text in the browser and we threw all our efforts away. Not that I'm bitter.
 We thought of using RabbitMQ to send messages from the post router function to a consumer so that we don't have to handle all the API requests in our router function.
 ```
+
+## W15D2 - August 22nd, 2023
+
+### More Confusion
+
+```
+We spent a lot of time today dealing with git confusion and figuring out how to set everything up to receive from front end.
+Our goal for tomorrow is to get responses working from Bard and establish RabbitMQ messaging.
+```
+
+## W15D3 - August 23rd, 2023
+
+### The Bard and The Rabbit
+
+```
+We made good headway early in the day in getting successful HTTP responses. We got Bard to give us successful text responses.
+We got hung up on getting a Rabbit consumer to work. Took a break in late afternoon to research better methods.
+```
+
+## W15D4 - August 24th, 2023
+
+### House of Bard Troubles
+
+```
+I was not present for groupwork today because of a wedding, but the group discovered a potential alternative to Google text-to-speech.
+They also tried implementing WebSockets.
+```
+
+## W15D5 - August 25th, 2023
+
+### Moving On
+
+```
+We decided this morning to move on from RabbitMQ andWebSockets, especially because the
+React Text-to-Speech toolkit rendered the return of chatbot text with the http response
+viable. No need for event messages, background texts, or back-to-front forced messages.
+Wealso abandoned Bard in favor of OpenAI's chat models.
+```
+
+## W16D1 -August 28th, 2023
+
+### We Have Words!
+
+```
+Today we made great headway in bring together all of our different functionality plans.
+OpenAI is giving us responses, we made progress in our database setup, and we havea solid foundation to finish up minimum functionality this week.
+```
+
+[Here's a useful markdown cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#lists "Markdown Cheatsheet")

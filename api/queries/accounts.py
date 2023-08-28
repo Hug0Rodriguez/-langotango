@@ -22,7 +22,6 @@ class AccountQueries(Queries):
         if not props:
             return None
         props["id"] = str(props["_id"])
-        print("🕰️props in GET is: ", props)
         return AccountOutWithPassword(**props)
 
     # function to create an account
