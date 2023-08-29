@@ -7,14 +7,14 @@ from .client import Queries
 
 
 class ConversationQueries(Queries):
-    DB_NAME = "mongo_data"
+    DB_NAME = "mongo-data"
     COLLECTION = "conversations"
 
     # TOKEN scenario
     def create(self, UserMessageIn: MessageIn) -> MessageOut:
         # check if conversation associated with existing token exists
         if (
-            mongo_data.conversations.find_one({"token": UserMessageIn.token})
+            mongo-data.conversations.find_one({"token": UserMessageIn.token})
             is False
         ):
             props = UserMessageIn.dict()
@@ -23,7 +23,9 @@ class ConversationQueries(Queries):
             # props["username"] = str(props["username"])
             # props["timestamp"] = str(props[datetime.now()])
             # props["token"] = str(props[UserMessageIn.token])
-            MessageOut["role"]
+            MessageOut["role"] = props["role"]
+            MessageOut["content"] = props["content"]
+
 
         # conversation already exists
         elif mongo_data.conversations.find_one({"token": UserMessageIn.token}):

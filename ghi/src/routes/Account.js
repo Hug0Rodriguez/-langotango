@@ -1,36 +1,50 @@
 import React from "react";
-// import { useState } from "react";
-// import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useNavigate } from "react-router-dom"
+import useToken from "@galvanize-inc/jwtdown-for-react";
 
 
-function Account({ isLoggedIn, handleLogin, handleLogout, handleSignUp }) {
+
+function Account() {
+
+
+  const navigate = useNavigate()
+  const { logout } = useToken()
+  const handleLogout = () => {
+    logout()
+    navigate("/")
+  }
+
+  const { token } = useToken();
+
   return (
     <div className="account">
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">Account</h5>
           <div>
-            {!isLoggedIn && (
-              <div>
-                <button className="button success" onClick={handleSignUp}>
+            <div>
+              {!token && (
+                <button
+                  className="button success"
+                  onClick={() => navigate("/signup")}
+                >
                   Sign Up
                 </button>
-                <button className="button primary" onClick={handleLogin}>
+              )}
+              {!token && (
+                <button
+                  className="button primary"
+                  onClick={() => navigate("/login")}
+                >
                   Login
                 </button>
-              </div>
-            )}
-            {isLoggedIn && (
-              <button className="button danger" onClick={handleLogout}>
-                Logout
-              </button>
-            )}
-          </div>
-          {!isLoggedIn && (
-            <div>
-
+              )}
             </div>
-          )}
+
+            {token && <button className="button danger" onClick={handleLogout}>
+              Logout
+            </button>}
+          </div>
         </div>
       </div>
     </div>

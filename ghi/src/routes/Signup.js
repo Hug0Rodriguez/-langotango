@@ -14,12 +14,10 @@ const SignupForm = () => {
     const accountData = {
       username: username,
       password: password,
-      name: name,
+      full_name: name,
     };
-    register(
-      accountData,
-      `${process.env.REACT_APP_USER_SERVICE_API_HOST}/api/user`
-    );
+    register(accountData, `${process.env.REACT_APP_API_HOST}/api/accounts`);
+
     e.target.reset();
     navigate("/");
   };
