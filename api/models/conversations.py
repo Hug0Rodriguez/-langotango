@@ -9,12 +9,12 @@ class Conversation(BaseModel):
     languages: List[str]
 
 
-class Accounts(BaseModel):
-    first_name: str
-    last_name: str
-    username: str
-    email: EmailStr
-    password: str
+class ConversationIn(BaseModel):
+    pass
+
+
+class ConversationOut(BaseModel):
+    pass
 
 
 # class Input(BaseModel):

@@ -1,22 +1,31 @@
 from pymongo.errors import DuplicateKeyError
 from models.messages import MessageIn, MessageOut
+from models.conversations
+from queries.conversations import ConversationQueries
 from datetime import datetime
 
 # from models.messages import
 from .client import Queries
 
 
-class ConversationQueries(Queries):
+class MessageQueries(Queries):
     DB_NAME = "mongo_data"
-    COLLECTION = "conversations"
+    COLLECTION = "messages"
 
-    # TOKEN scenario
+    def create(
+                self,
+                UserMessageIn: MessageIn,
+
+    ) -> MessageOut:
+        props["username"]
+        props["datetime"]
+        props["token"]
+        props["content"]
+        props["role"]
+
     def create(self, UserMessageIn: MessageIn) -> MessageOut:
         # check if conversation associated with existing token exists
-        if (
-            mongo_data.conversations.find_one({"token": UserMessageIn.token})
-            is False
-        ):
+
             props = UserMessageIn.dict()
             self.collection.insert_one(props)
             props["id"] = str(props["_id"])
@@ -26,9 +35,9 @@ class ConversationQueries(Queries):
             MessageOut["role"]
 
         # conversation already exists
-        elif mongo_data.conversations.find_one({"token": UserMessageIn.token}):
+        if self.messages.find({"username": UserMessageIn["username"]}):
             # set conversation to the existing conversation based on the token
-            conversation = mongo_data.conversations.find_one(
+            conversation = self.conversations.find_one(
                 {"token": UserMessageIn.token}
             )
             # if convo exists, add messages
@@ -39,17 +48,6 @@ class ConversationQueries(Queries):
             # MessageOut is what we send to chatbot
         return MessageOut
 
-
-class MessageQueries(Queries):
-    DB_NAME = "mongo_data"
-    COLLECTION = "messgaes"
-
-    def create(self, UserMessageIn: MessageIn) -> MessageOut:
-        props["username"]
-        props["datetime"]
-        props["token"]
-        props["content"]
-        props["role"]
 
 
 """
