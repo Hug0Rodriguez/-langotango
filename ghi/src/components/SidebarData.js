@@ -1,7 +1,5 @@
 import React from 'react';
 import * as AiIcons from "react-icons/ai";
-import * as LuIcons from "react-icons/lu";
-
 
 export const SidebarData = [
   {
@@ -11,12 +9,6 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Languages",
-    path: "/languages",
-    icons: <LuIcons.LuLanguages />,
-    cName: "nav-text",
-  },
-   {
     title: "Chat",
     path: "/chat",
     icons: <AiIcons.AiFillContacts />,

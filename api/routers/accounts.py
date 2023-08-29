@@ -68,7 +68,7 @@ async def create_account(
     # login automatically via login def in imported authenticator
     # is the login def creating a session querie?
     token = await authenticator.login(response, request, form, repo)
-    print("🫒token is: ", token)
+    print("routers/accounts.py Line 71 token is: ", token)
     return AccountToken(account=account, **token.dict())
 
 
