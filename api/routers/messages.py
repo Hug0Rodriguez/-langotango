@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from fastapi import (
     Depends,
     # # HTTPException,
@@ -9,23 +10,28 @@ from fastapi import (
     # WebSocket,
     # WebSocketDisconnect,
 )
+=======
+from fastapi import Depends, APIRouter, Request
+from .auth import authenticator
+>>>>>>> 1d3d056637faebb2fb699f7c0b23e8447ba4f047
 from pydantic import BaseModel
 from models.messages import (
     UserMessage,
 )
+<<<<<<< HEAD
 from .auth import authenticator
 from models.accounts import AccountOut
 from queries.accounts import AccountQueries
 import os
 import base64
 import requests
+=======
+from queries.messages import ConversationQueries, MessageQueries
+from models.accounts import AccountOut
+from datetime import datetime
+import os
+>>>>>>> 1d3d056637faebb2fb699f7c0b23e8447ba4f047
 import openai
-
-# from token_auth import get_current_user
-import json
-
-# import time
-
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
@@ -35,16 +41,12 @@ router = APIRouter()
 class TestResponse(BaseModel):
     message: str
 
-    # token = os.environ["TOKEN"]
-    # # token of the day: aAjFqKGwYEp32myZHuDxafvHU6wOMKc5prWPlvqu8ydT9V4ITLpNMBkoQaVJ3r2dfyalKw.
-    # bard = Bard(token=token)
-    # chatbot_response = bard.get_answer(text)["content"]
-
 
 class ReceivedMessage(BaseModel):
     text: str
 
 
+<<<<<<< HEAD
 def bard_test(**kwargs):
     pass
 
@@ -141,11 +143,14 @@ connected_socket = None
 #     await requests.post("http://localhost:8000/api/return-text", text)
 
 
+=======
+>>>>>>> 1d3d056637faebb2fb699f7c0b23e8447ba4f047
 # POST
 @router.post("/api/messages", response_model=ReceivedMessage)
 async def user_message_in(
     message: UserMessage,
     request: Request,
+<<<<<<< HEAD
     account: AccountOut = Depends(authenticator.try_get_current_account_data)
     # background_tasks: BackgroundTasks
     # repo: ConversationQueries = Depends()
@@ -171,9 +176,31 @@ async def user_message_in(
 
     # query to write completion to the DB collection
     # print(completion.choices[0].message)
+=======
+    repo: ConversationQueries = Depends(),
+    account: AccountOut = Depends(authenticator.try_get_current_account_data),
+):
+    print(account)
+    # message["token"] = "token"
+    # message["role"] = "user"
+    # message["timestamp"] = datetime.now()
+    # repo.create(userMessageIn=message)
+    # message_history = repo.get_all_messages()
+    # # ensure output of message_history is a list of dictionaries
+    # # CHAP GPT CHATBOT EXAMPLE REQUEST
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        # messages must be a list dictionaries in the form
+        # {"role": "user/system", {"content": "string"}}
+        messages=[{"role": "user", "content": "Hello there!"}],
+    )
+
+    # query to write completion to the DB collection
+    response = completion.choices[0].message.content
+>>>>>>> 1d3d056637faebb2fb699f7c0b23e8447ba4f047
 
     # return chat message
-    return message
+    return {"text": response}
 
 
 # @router.get("/api/messages")
