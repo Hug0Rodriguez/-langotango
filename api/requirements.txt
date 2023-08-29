@@ -7,8 +7,4 @@ passlib[bcrypt]==1.7.4
 python-multipart==0.0.5
 requests==2.31.0
 openai==0.27.9
-<<<<<<< HEAD
-pytest==23.2.1
-=======
 pytest==7.4.0
->>>>>>> 1d3d056637faebb2fb699f7c0b23e8447ba4f047

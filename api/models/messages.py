@@ -39,6 +39,18 @@ class MessageOut(BaseModel):
     content: str
 
 
+class MessageIn(BaseModel):
+    username: str
+    timestamp: datetime
+    token: str
+    content: list
+    role: str
+
+class MessageOut(BaseModel):
+    role: str
+    content: str
+
+
 
 # class AudioIn(BaseModel):
 #     audio: bytes
