@@ -12,13 +12,13 @@ class ConversationQueries(Queries):
 
     # TOKEN scenario
     def create(self, UserMessageIn: MessageIn) -> MessageOut:
+        props = self.collection.insert_one({})
         # check if conversation associated with existing token exists
         if (
-            mongo-data.conversations.find_one({"token": UserMessageIn.token})
+            props.conversations.find_one({"token": UserMessageIn.token})
             is False
+        props = UserMessageIn.dict()
         ):
-            props = UserMessageIn.dict()
-            self.collection.insert_one(props)
             props["id"] = str(props["_id"])
             # props["username"] = str(props["username"])
             # props["timestamp"] = str(props[datetime.now()])
