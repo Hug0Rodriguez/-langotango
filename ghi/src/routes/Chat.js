@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSpeechSynthesis } from "react-speech-kit";
+import { useNavigate } from "react-router-dom"
+
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -15,6 +17,8 @@ function Chat() {
   const [selectedLanguage, setSelectedLanguage] = useState("en-US"); // Default language
   const [responseChat, setResponseChat] = useState();
   const { speak } = useSpeechSynthesis();
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     handleListen();
@@ -130,8 +134,12 @@ function Chat() {
           {/* Display response */}
         </div>
         <div className="box">
-          <h2>Chat History</h2>
+          <h2>Saved Chat</h2>
           {savedAudio && savedAudio.map((n) => <p key={n}>{n}</p>)}
+          <button
+            className="button primary"
+            onClick={() => navigate("/chatHist")}
+          >Chat History</button>
         </div>
       </div>
     </>

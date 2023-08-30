@@ -15,6 +15,7 @@ import Chat from "./routes/Chat";
 import Navbar from "./components/Navbar";
 import SignupForm from "./routes/Signup";
 import LoginForm from "./routes/Login";
+import chatHistory from "./routes/ChatHist";
 
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
@@ -54,6 +55,8 @@ function App() {
                     <Route path="/accounts" element={<Accounts />} />
                     <Route path="/signup" element={<SignupForm />} />
                     <Route path="/login" element={<LoginForm />} />
+                    <Route path="/chatHist" element={<chatHistory />} />
+
                 </Routes>
             </AuthProvider>
           </BrowserRouter>

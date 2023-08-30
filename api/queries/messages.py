@@ -1,40 +1,79 @@
 from bson.objectid import ObjectId
-from models.messages import MessageIn, MessageOut
+from models.messages import MessageIn, MessageOut, MessageOutWithConvoId
 from .conversations import ConversationQueries
 from fastapi import Depends
 from typing import List
-
 # from pymongo.errors import DuplicateKeyError
 # from datetime import datetime
-# from models.messages import
 from .client import Queries
+from models.validator import PydanticObjectId
 
 
 class MessageQueries(Queries):
-    DB_NAME = "mongo_data"
+    DB_NAME = "mongo-data"
     COLLECTION = "messages"
 
     def create(
         self,
         UserMessageIn: MessageIn,
-        convo_queries: ConversationQueries = Depends(),
-    ) -> MessageOut:
-        props = self.collection.insert_one({UserMessageIn.content})
-        # link message with conversation id
-        conversation = convo_queries.get_one_by_token(UserMessageIn.token)
-        props["conversation_id"] = ObjectId(conversation["_id"])
-        self.collection.insert_one(props)
+        token: str,
+    ) -> MessageOutWithConvoId:
+        # create "ConversationIn" object to pass into ConversationQueries.create()
+        conversation_in = {}
+        conversation_in["time_stamp"] = UserMessageIn["time_stamp"]
+        conversation_in["username"] = UserMessageIn["username"]
+        conversation_in["tokens"] = [token]
+        # find/create conversation based on token
+        convo_queries = ConversationQueries()
+        conversation = convo_queries.create(conversation=conversation_in)
+        # Assigning the new message's associated id to the id of the conversation
+        # UserMessageIn = UserMessageIn.dict()
+        UserMessageIn["conversation_id"] = conversation["_id"]
+        # add UserMessageIn to messages collection
+        new_message = self.collection.insert_one(UserMessageIn)
+        # prep output with role and content to feed to chatgpt
+        # select the message in the db by it's ObjectId
+        message_out = self.get_one_by_id(new_message.inserted_id)
 
-    def get_all(
-        UserMessageIn: MessageIn,
-        convo_queries: ConversationQueries = Depends(),
+        return message_out
+
+    def get_one_by_id(self, id: str) -> MessageOutWithConvoId:
+        message = self.collection.find_one({"_id": ObjectId(id)})
+        message_out = {}
+        message_out["role"] = message["role"]
+        message_out["content"] = message["content"]
+        message_out["conversation_id"] = message["conversation_id"]
+        return message_out
+
+    def get_all_in_convo(
+            self,
+        conversation_id: PydanticObjectId,
     ) -> List[MessageOut]:
+        #### Matching_messages = []
         # for loop for creating list of all messages
+        messages = self.collection.find(
+            {
+            "conversation_id": {"$eq": conversation_id}
+            },
+            {
+            "_id": 0,
+            "time_stamp": 0,
+            "conversation_id": 0,
+            "username": 0,
+        }
+        )
+            #### for message in COLLECTION.find():
         # associated with a conversation's id
+             ###### if message.conversation_id == UserMessageIn.conversation_id:
+        # associated with a conversation's id
+            # if message["conversation_id"] == conversation_id:
+            #     matching_messages.append(message)
+            #### output_message = MessageOut
         # for messages inside db
         # if message has id of conversation querie
         # append message to List[MessageOut]
-        pass
+            ####### matching_messages.append(output_message)
+        return [message for message in messages]
 
 
 """

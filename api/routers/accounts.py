@@ -112,18 +112,3 @@ async def get_token(
 #     if account_data:
 #         return personalized_list
 #     return general_list
-
-
-@router.get("/conversations")
-def get_conversations():
-    return []
-
-
-@router.post("/conversations")
-def create_conversations():
-    return []
-
-
-@router.delete("/conversations")
-def delete_conversations():
-    return None
