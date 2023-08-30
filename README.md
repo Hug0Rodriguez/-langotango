@@ -53,17 +53,22 @@ Our application must, at minimum:
 
 ## APIs
 
-#### 3rd PArty APIs
+### In-House APIs
 
-- Speech-to-Text: Whisper API
-Main Page: https://openai.com/research/whisper
-Documentation: https://github.com/openai/whisper
-Example Projects Q&A: https://github.com/openai/whisper/discussions/categories/show-and-tell
+FastAPI
 
-- Chatbot: Google Bard API (Unofficial version by Daniel Parks)
-Homepage: https://bard.google.com/
-Documentation: https://github.com/dsdanielpark/Bard-API
+React
 
-- Text-to-Speech: Google Bard API
-Homepage: https://bard.google.com/
-Documentation: https://github.com/dsdanielpark/Bard-API
+### 3rd Party APIs
+
+Speech-to-Text: React
+- [Main Page](https://www.npmjs.com/)
+- [Documentation](https://www.npmjs.com/package/react-speech-kit#install)
+
+Chatbot: OpenAI ChatGPT Model 3.5
+- [Homepage](https://platform.openai.com/)
+- [Documentation](https://platform.openai.com/docs/api-reference/)
+
+Text-to-Speech: react-speech-kit
+- [Homepage](https://www.npmjs.com/)
+- [Documentation](https://www.npmjs.com/package/react-speech-kit#install)

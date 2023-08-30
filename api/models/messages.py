@@ -3,34 +3,29 @@ from typing import List
 from datetime import datetime
 
 
+# dictated by user
 class UserMessage(BaseModel):
-    text: str
-    # created_at: datetime
-    # username: str
-    # conversation_id: int
+    content: str
 
 
-
-class Preferences(BaseModel):
-    language: str
-    difficulty: str
-
-
-class ApiMessage(BaseModel):
-    text: str
-    # created_at: datetime
-
+# goes into database
 class MessageIn(BaseModel):
     username: str
-    timestamp: datetime
-    token: str
-    content: list
+    time_stamp: datetime
+    content: str
     role: str
 
+
+# comes out of db, goes to chatbot
 class MessageOut(BaseModel):
     role: str
     content: str
 
+
+# stretch goal
+class Preferences(BaseModel):
+    language: str
+    difficulty: str
 
 
 # class AudioIn(BaseModel):

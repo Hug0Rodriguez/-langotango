@@ -15,3 +15,6 @@ Today was my day to take command, we worked out a few kinks but are a bit stuck 
 
 Monday August 28th 2023
 Today we completed and got our react speech synthesis to work. We also got our chatgpt api to work and actually respond to whatever people are writing .
+
+Tuesday August 29th 2023
+Was lost completly today did my best to follow along

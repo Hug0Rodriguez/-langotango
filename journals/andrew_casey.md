@@ -114,13 +114,25 @@ viable. No need for event messages, background texts, or back-to-front forced me
 Wealso abandoned Bard in favor of OpenAI's chat models.
 ```
 
-## W16D1 -August 28th, 2023
+## W16D1 - August 28th, 2023
 
 ### We Have Words!
 
 ```
 Today we made great headway in bring together all of our different functionality plans.
 OpenAI is giving us responses, we made progress in our database setup, and we havea solid foundation to finish up minimum functionality this week.
+```
+
+## W16D2 - August 29th, 2023
+
+### Front-End Auth Success and DB Work
+
+```
+This morning after stand up we got right on front-end auth completion. Peter drove and we got
+everything set up so that We were hitting all our endpoints, and the useToken hook is now controlling which auth buttons are visible based on token status.
+We had to do a refactor because our App.js file was not being used in our index.js, so our baseUrl variable wasn't getting called by useToken.
+
+After getting front-end auth finished, we moved on to query and model planning. We spent much of the late-afternoon plotting the course of our database.
 ```
 
 [Here's a useful markdown cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#lists "Markdown Cheatsheet")

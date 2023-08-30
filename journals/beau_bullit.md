@@ -9,3 +9,6 @@ Today we tested the authentication endpoints. We noticed that the User models ha
 
 W15D1
 Today we experimented with apis that convert audio to text. We were able to integrate whisper after 2 hours and get sucessful text responses. After lunch, Peter found an easier way of speech to text with "Diction"/"Dictation". We are now in the process of integrating a messaging queue so for our apis talking to each other.
+
+W16D2
+Peter and Andrew did some front end work for authentication. Completed frontend auth after refactoring some of our code. Started work on queries for storing our data in mongoDB and accessing it correctly. Created Messages and Conversation Queries that will be used for data storage.

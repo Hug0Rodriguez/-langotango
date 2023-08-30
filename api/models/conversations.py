@@ -1,12 +1,17 @@
+from bson.objectid import ObjectId
 from pydantic import BaseModel, EmailStr
-from typing import Optional, List
+from typing import List
 from datetime import datetime
 
 
-class Conversation(BaseModel):
-    messages: str
-    time: datetime
-    languages: List[str]
+class ConversationIn(BaseModel):
+    time_stamp: datetime
+    username: str
+    tokens: List[str]
+
+
+class ConversationOut(ConversationIn):
+    _id: ObjectId
 
 
 class Accounts(BaseModel):

@@ -50,3 +50,7 @@ stretch goal
 # W16D1
 - Took the week for the first half of the day and was able to get audio to play for the response as well as the user playback when the stop button is pressed
 - Continuation of the authentication
+
+# W16D2
+- Finished off Frontend Auth and received a response on frontend and backend
+- Refactored the Frontend code for the functionality because App was not called anywhere in the code

@@ -4,11 +4,12 @@ from pydantic import BaseModel
 from models.messages import (
     UserMessage,
 )
-from queries.messages import ConversationQueries, MessageQueries
+from queries.messages import ConversationQueries
 from models.accounts import AccountOut
-from datetime import datetime
 import os
 import openai
+
+# from datetime import datetime
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
 

@@ -1,60 +1,55 @@
-from pymongo.errors import DuplicateKeyError
+from bson.objectid import ObjectId
 from models.messages import MessageIn, MessageOut
-from datetime import datetime
+from .conversations import ConversationQueries
+from fastapi import Depends
+from typing import List
 
+# from pymongo.errors import DuplicateKeyError
+# from datetime import datetime
 # from models.messages import
 from .client import Queries
 
 
-class ConversationQueries(Queries):
-    DB_NAME = "mongo-data"
-    COLLECTION = "conversations"
-
-    # TOKEN scenario
-    def create(self, UserMessageIn: MessageIn) -> MessageOut:
-        # check if conversation associated with existing token exists
-        if (
-            mongo-data.conversations.find_one({"token": UserMessageIn.token})
-            is False
-        ):
-            props = UserMessageIn.dict()
-            self.collection.insert_one(props)
-            props["id"] = str(props["_id"])
-            # props["username"] = str(props["username"])
-            # props["timestamp"] = str(props[datetime.now()])
-            # props["token"] = str(props[UserMessageIn.token])
-            MessageOut["role"] = props["role"]
-            MessageOut["content"] = props["content"]
-
-
-        # conversation already exists
-        elif mongo_data.conversations.find_one({"token": UserMessageIn.token}):
-            # set conversation to the existing conversation based on the token
-            conversation = mongo_data.conversations.find_one(
-                {"token": UserMessageIn.token}
-            )
-            # if convo exists, add messages
-
-            # when convo is pulled up, add token to convo tokens list
-            # else, convo doesn't exist, create convo
-
-            # MessageOut is what we send to chatbot
-        return MessageOut
-
-
 class MessageQueries(Queries):
     DB_NAME = "mongo_data"
-    COLLECTION = "messgaes"
+    COLLECTION = "messages"
 
-    def create(self, UserMessageIn: MessageIn) -> MessageOut:
-        props["username"]
-        props["datetime"]
-        props["token"]
-        props["content"]
-        props["role"]
+    def create(
+        self,
+        UserMessageIn: MessageIn,
+        convo_queries: ConversationQueries = Depends(),
+    ) -> MessageOut:
+        props = self.collection.insert_one({UserMessageIn.content})
+        # link message with conversation id
+        conversation = convo_queries.get_one_by_token(UserMessageIn.token)
+        props["conversation_id"] = ObjectId(conversation["_id"])
+        self.collection.insert_one(props)
+
+    def get_all(
+        UserMessageIn: MessageIn,
+        convo_queries: ConversationQueries = Depends(),
+    ) -> List[MessageOut]:
+        # for loop for creating list of all messages
+        # associated with a conversation's id
+        # for messages inside db
+        # if message has id of conversation querie
+        # append message to List[MessageOut]
+        pass
 
 
 """
+MessageIn/MessageOut Models:
+class MessageIn(BaseModel):
+    username: str
+    timestamp: datetime
+    token: str
+    content: list
+    role: str
+
+class MessageOut(BaseModel):
+    role: str
+    content: str
+
 Example Queries:
 class BookQueries(Queries):
     DB_NAME = "library"
