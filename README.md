@@ -1,3 +1,12 @@
+                                    A text to speech chat app built with Fastapi and React
+![Screenshot 2024-01-01 at 3 18 18 PM](https://github.com/Hug0Rodriguez/-langotango/assets/76200652/a96df3c5-a3a3-42de-9f8f-124bb5328f11)
+
+![Screenshot 2024-01-01 at 3 18 51 PM](https://github.com/Hug0Rodriguez/-langotango/assets/76200652/4d46c1e7-034f-4205-95d2-55c63f505603)
+
+
+
+
+
 # LangoTango Project Documentation
 ##### Team Members
 - Andrew
@@ -72,8 +81,5 @@ Chatbot: OpenAI ChatGPT Model 3.5
 Text-to-Speech: react-speech-kit
 - [Homepage](https://www.npmjs.com/)
 - [Documentation](https://www.npmjs.com/package/react-speech-kit#install)
-![Screenshot 2024-01-01 at 3 18 18 PM](https://github.com/Hug0Rodriguez/-langotango/assets/76200652/a96df3c5-a3a3-42de-9f8f-124bb5328f11)
-
-![Screenshot 2024-01-01 at 3 18 51 PM](https://github.com/Hug0Rodriguez/-langotango/assets/76200652/4d46c1e7-034f-4205-95d2-55c63f505603)
 
 - 
